@@ -21,6 +21,9 @@ class commentInput extends Component {
         }
         this.props.handleButtonClick(comment)
     }
+    componentDidMount () {
+        this.input.focus()
+    }
     render () {
         return (
             <div className="comment-input">
@@ -30,7 +33,9 @@ class commentInput extends Component {
                 </div>
                 <div className="input-item">
                     <span>评论内容：</span>
-                    <textarea type="text" className="content-input" onChange={(e) => {this.handleInput("userComment", e)}} 
+                    <textarea type="text" className="content-input" 
+                    ref={(input) => this.input = input}
+                    onChange={(e) => {this.handleInput("userComment", e)}} 
                     value={this.state.userComment}/>
                 </div>
                 <button className="comment-post" onClick={this.handlePost}>发布</button>

@@ -2,17 +2,26 @@ import React, { Component } from 'react';
 import './App.css';
 import CommentList from './components/commentList'
 import CommentInput from './components/commentInput'
+import storeWrapper from './components/highOrder';
 
 class App extends Component {
-  constructor () {
-    super ()
+  constructor (props) {
+    super (props)
     this.state = {
-      comments: []
+      comments: props.comments
     }
+    console.log(this.state)
   }
   handleComment = (e) => {
     console.log("输入了评论", e)
     this.state.comments.unshift(e)
+    this.setState({
+      comments: this.state.comments
+    })
+    this.props.saveData(e)
+  }
+  handleDelete = (index, e) => {
+    this.state.comments.splice(index, 1)
     this.setState({
       comments: this.state.comments
     })
@@ -21,10 +30,11 @@ class App extends Component {
     return (
       <div className="App">
           <CommentInput handleButtonClick={this.handleComment}/>
-          <CommentList comments={this.state.comments}/>
+          <CommentList comments={this.state.comments} handleDelete={this.handleDelete}/>
       </div>
     );
   }
 }
 
-export default App;
+const wrappedApp = storeWrapper(App)
+export default wrappedApp;
