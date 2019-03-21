@@ -13,7 +13,6 @@ class App extends Component {
     console.log(this.state)
   }
   handleComment = (e) => {
-    console.log("输入了评论", e)
     this.state.comments.unshift(e)
     this.setState({
       comments: this.state.comments
